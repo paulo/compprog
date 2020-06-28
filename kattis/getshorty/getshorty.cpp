@@ -21,7 +21,7 @@ vector<ld> dijkstra(int start, int n, vector<vector<edge>> adj) {
     vector<ld> dist(n, 0);
 
     dist[start] = 1.0;
-    priority_queue<pair<ld, int>, vector<pair<ld, int>>, greater<pair<ld, int>>> pq;
+    priority_queue<pair<ld, int>, vector<pair<ld, int>>, less<pair<ld, int>>> pq;
     pq.push(make_pair(dist[start], start));
     while (!pq.empty()) {
         ld d = pq.top().first;
@@ -54,8 +54,6 @@ int main() {
 
         for(int i = 0; i < m; i++){
             cin >> u >> v >> f;
-
-            if(u>v) swap(u,v);
 
             adj[u].push_back(edge(u, v, f));
             adj[v].push_back(edge(v, u, f));
