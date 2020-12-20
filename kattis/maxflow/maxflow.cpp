@@ -1,13 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <queue>
 #include <algorithm>
+#include <iostream>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
 typedef long long ll;
 const int MAXN = 510;
-const ll MAXFLOW = 1<<30;
+const ll MAXFLOW = 1 << 30;
 
 struct edge {
     int u, v;
@@ -32,7 +32,8 @@ bool bfs(int s, int t, int n, int m) {
 
     visited[s] = true;
     while (!Q.empty()) {
-        int u = Q.front(); Q.pop();
+        int u = Q.front();
+        Q.pop();
 
         for (int v = 0; v < adj[u].size(); v++) {
             int xv = adj[u][v].v;
@@ -40,7 +41,7 @@ bool bfs(int s, int t, int n, int m) {
                 Q.push(xv);
                 parent[xv] = u;
                 visited[xv] = true;
-                if(xv == t) return true;
+                if (xv == t) return true;
             }
         }
     }
@@ -51,21 +52,24 @@ bool bfs(int s, int t, int n, int m) {
 ll foldFulkEdKarp(int s, int t, int n, int m) {
     ll total = 0;
 
-    while(bfs(s, t, n, m)) {
+    while (bfs(s, t, n, m)) {
         ll path_flow = MAXFLOW;
 
         int u = parent[t], v = t;
 
-        while(v != s) {
+        while (v != s) {
             path_flow = min(path_flow, res[u][v]);
-            v = u; u = parent[v];
+            v = u;
+            u = parent[v];
         }
 
-        u = parent[t]; v = t;
-        while(v != s) {
+        u = parent[t];
+        v = t;
+        while (v != s) {
             res[u][v] -= path_flow;
             res[v][u] += path_flow;
-            v = u; u = parent[v];
+            v = u;
+            u = parent[v];
         }
 
         total += path_flow;
@@ -79,12 +83,16 @@ int main() {
     ll c;
 
     cin >> n >> m >> s >> t;
-    for(int i = 0; i<n; i++) for(int j = 0; j < n; j++) {res[i][j] = 0; initCaps[i][j] = 0;}
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++) {
+            res[i][j] = 0;
+            initCaps[i][j] = 0;
+        }
 
     for (int i = 0; i < m; i++) {
         cin >> u >> v >> c;
 
-        if(res[u][v] == 0 && res[v][u] == 0) {
+        if (res[u][v] == 0 && res[v][u] == 0) {
             adj[u].push_back(edge(u, v, c));
             adj[v].push_back(edge(v, u, 0));
         }
@@ -96,16 +104,17 @@ int main() {
     ll flow = foldFulkEdKarp(s, t, n, m);
 
     vector<edge> vpp;
-    for(int i = 0; i < MAXN; i++) {
-        for(int j = 0; j < MAXN; j++) {
-            if(initCaps[i][j] - res[i][j] > 0) vpp.push_back(edge(i, j, initCaps[i][j] - res[i][j]));
+    for (int i = 0; i < MAXN; i++) {
+        for (int j = 0; j < MAXN; j++) {
+            if (initCaps[i][j] - res[i][j] > 0)
+                vpp.push_back(edge(i, j, initCaps[i][j] - res[i][j]));
         }
     }
 
     cout << n << ' ' << flow << ' ' << vpp.size() << endl;
 
-    for(int i = 0; i < vpp.size(); i++) {
-        if(vpp[i].cap == 0) continue;
+    for (int i = 0; i < vpp.size(); i++) {
+        if (vpp[i].cap == 0) continue;
         cout << vpp[i].u << ' ' << vpp[i].v << ' ' << vpp[i].cap << endl;
     }
 
