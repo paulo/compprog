@@ -1,6 +1,7 @@
 .PHONY: cpp-new rust-new cpp-compile rust-compile cpp-test rust-test
 
-CXXFLAGS=-std=c++0x
+CXXCOMPILER=g++-10 # Force GNU gcc compiler from brew instead of MacOS clang
+CXXFLAGS=-std=c++11
 CXXPLUGSFLAGS=-Wall -Wextra -Werror -Wpedantic -pedantic-errors
 OPTIMIZATION=-O2
 WORKINGDIR=wip
@@ -24,7 +25,7 @@ rust-new: ## Start new problem with given name with a rust template
 
 cpp-compile: $(WORKINGDIR)/$(t)/$(t).cpp ## Compile with g++
 	@mkdir -p $(WORKINGDIR)/$(t)/bin
-	@g++ $(CXXFLAGS) $(WORKINGDIR)/$(t)/$(t).cpp -o $(WORKINGDIR)/$(t)/bin/$(t)
+	@$(CXXCOMPILER) $(CXXFLAGS) $(CXXPLUGSFLAGS) $(WORKINGDIR)/$(t)/$(t).cpp -o $(WORKINGDIR)/$(t)/bin/$(t)
 
 rust-compile: $(WORKINGDIR)/$(t)/$(t).rs ## Compile with rustc
 	@rustc $(WORKINGDIR)/$(t)/$(t).rs -o $(WORKINGDIR)/$(t)/bin/$(t)
