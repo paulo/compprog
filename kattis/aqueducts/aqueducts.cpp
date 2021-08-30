@@ -86,13 +86,11 @@ int foldFulkEdKarp(int s, int t, int n) {
         while (v != s) {
             totalDist += dists[u][v];
 
-            // cout << v << " - ";
             res[u][v] -= path_flow;
             res[v][u] += path_flow;
             v = u;
             u = parent[v];
         }
-        // cout << endl;
 
         total += path_flow;
     }
@@ -144,8 +142,6 @@ int main() {
             // if (i == j) continue;
             d = dist(coords[i - 1], coords[j - 1]);
             if (d <= q && coords[i - 1].h > coords[j - 1].h) {
-                // cout << "dist: " << i << " - " << j << " : "
-                // << dist(coords[i - 1], coords[j - 1]) << endl;
                 adj[i].push_back({i, j, d});
                 adj[j].push_back({j, i, -d});
                 res[i][j] = s + t;
