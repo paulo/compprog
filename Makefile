@@ -2,7 +2,7 @@
 
 CXXCOMPILER=g++-10 # Force GNU gcc compiler from brew instead of MacOS clang
 CXXFLAGS=-std=c++11
-CXXPLUGSFLAGS=-Wall -Wextra -Werror -Wpedantic -pedantic-errors
+CXXPLUGSFLAGS=-Wall -Wextra -Werror -Wpedantic -pedantic-errors -Wno-sign-compare
 OPTIMIZATION=-O2
 WORKINGDIR=wip
 TEMPLATEDIR=templates
