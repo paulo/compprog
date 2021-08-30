@@ -34,7 +34,6 @@ int main() {
         ll ns = sqrt(n);
 
         had(ns, x, y, w, h);
-
     }
 
     return 0;
